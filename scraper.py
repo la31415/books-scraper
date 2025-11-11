@@ -1,8 +1,7 @@
 """
 網頁爬蟲模組
 
-此模組負責從博客來網路書店爬取書籍資料,
-包括書名、作者、價格、連結等資訊,並處理分頁邏輯。
+此模組負責所有與網頁爬取相關的邏輯。
 """
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -25,9 +24,6 @@ class BookScraper:
     def __init__(self, headless: bool = True) -> None:
         """
         初始化爬蟲
-
-        Args:
-            headless: 是否使用無頭模式,預設為 True
         """
         self.headless = headless
         self.driver: Optional[webdriver.Chrome] = None
@@ -35,9 +31,6 @@ class BookScraper:
     def setup_driver(self) -> None:
         """
         設定 Selenium WebDriver
-
-        Raises:
-            WebDriverException: WebDriver 初始化失敗時拋出
         """
         try:
             options = webdriver.ChromeOptions()
@@ -72,12 +65,6 @@ class BookScraper:
     def extract_price(self, price_text: str) -> int:
         """
         從價格文字中提取數字
-
-        Args:
-            price_text: 原始價格文字,例如 '優惠價: 79 折, 513 元'
-
-        Returns:
-            價格數字,若無法解析則返回 0
         """
         # 使用正則表達式找出所有數字
         numbers = re.findall(r'\d+', price_text)
@@ -90,12 +77,6 @@ class BookScraper:
     def parse_page(self, html: str) -> List[Dict[str, any]]:
         """
         解析單頁書籍資料
-
-        Args:
-            html: 網頁 HTML 內容
-
-        Returns:
-            書籍資料列表,每個元素為包含書籍資訊的字典
         """
         soup = BeautifulSoup(html, 'html.parser')
         books = []
@@ -145,12 +126,6 @@ class BookScraper:
     def scrape_llm_books(self) -> List[Dict[str, any]]:
         """
         爬取博客來 LLM 關鍵字的所有書籍資料
-
-        Returns:
-            所有書籍資料列表,每個元素為包含書籍資訊的字典
-
-        Raises:
-            WebDriverException: 網頁操作失敗時拋出
         """
         print("正在啟動爬蟲...")
         self.setup_driver()
@@ -233,12 +208,6 @@ class BookScraper:
 def scrape_books() -> List[Dict[str, any]]:
     """
     便利函式: 爬取書籍資料
-
-    Returns:
-        書籍資料列表,每個元素為包含書籍資訊的字典
-
-    Raises:
-        WebDriverException: 爬蟲執行失敗時拋出
     """
     scraper = BookScraper(headless=True)
     return scraper.scrape_llm_books()

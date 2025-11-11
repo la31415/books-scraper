@@ -1,10 +1,7 @@
 """
 博客來 LLM 書籍管理系統
 
-此程式提供一個命令列介面,讓使用者可以:
-1. 更新書籍資料庫(從博客來爬取最新資料)
-2. 查詢書籍(依書名或作者)
-3. 離開系統
+此檔案為程式的進入點，提供一個簡單的命令列選單。
 """
 
 from database import BookDatabase
@@ -37,9 +34,6 @@ class BookStoreApp:
     def update_database(self) -> None:
         """
         更新書籍資料庫
-
-        從博客來網站爬取最新的 LLM 相關書籍資料,
-        並將其儲存至資料庫中。
         """
         print("\n正在更新書籍資料庫...")
         print("這可能需要幾分鐘時間,請稍候...\n")
@@ -66,8 +60,6 @@ class BookStoreApp:
     def search_menu(self) -> None:
         """
         查詢子選單
-
-        提供書名查詢和作者查詢兩種選項。
         """
         while True:
             print("\n" + "-" * 50)
@@ -92,8 +84,6 @@ class BookStoreApp:
     def search_by_title(self) -> None:
         """
         依書名查詢
-
-        提示使用者輸入關鍵字,並顯示符合條件的書籍。
         """
         keyword = input("\n請輸入書名關鍵字: ").strip()
 
@@ -110,8 +100,6 @@ class BookStoreApp:
     def search_by_author(self) -> None:
         """
         依作者查詢
-
-        提示使用者輸入關鍵字,並顯示符合條件的書籍。
         """
         keyword = input("\n請輸入作者關鍵字: ").strip()
 
@@ -128,9 +116,6 @@ class BookStoreApp:
     def display_results(self, results: List[Dict[str, any]]) -> None:
         """
         顯示查詢結果
-
-        Args:
-            results: 書籍資料列表,每個元素為包含書籍資訊的字典
         """
         if not results:
             print("\n查無資料。")
@@ -149,8 +134,6 @@ class BookStoreApp:
     def run(self) -> None:
         """
         執行主程式
-
-        顯示主選單並處理使用者輸入。
         """
         print("\n歡迎使用博客來 LLM 書籍管理系統!")
 
@@ -172,8 +155,6 @@ class BookStoreApp:
 def main() -> None:
     """
     主函式
-
-    程式進入點,初始化應用程式並執行主迴圈。
     """
     app = BookStoreApp()
 
